@@ -9,18 +9,14 @@ int main(void)
 
 	choix = menu_choix();
 	Livre livre[NBRMAX];
-	Livre *pLivre;
-	char testISBN[13];
-	while (1){   //condition a modfier plus 
-		pLivre = &livre[NBRMAX];
-		
+	while (1){   //condition a modfier plus tard
 		switch(choix){
 			case 0: 
 				return (0);
 				break;
 			case 1: 
 				("Vous avez selectionner [1] :/n");
-				ajout_livre(pLivre);
+				ajout_livre(&livre[nbr_livre]);
 				break;
 			default: 
 				printf("pas encore programme tu connais");
