@@ -16,10 +16,10 @@ void affISBN(char *ISBN)
 		long4emeSeg = checkseg3N2(ISBN, p);
 		printf("-");
 		a = i;
-		for(i; i< a+long4emeSeg; i++)
+		for(; i< a+long4emeSeg; i++)
 			printf("%c", ISBN[i]);
 		printf("-");
-		for(i; i < 13; i++)
+		for(; i < 13; i++)
 		{
 			printf("%c", ISBN[i]);
 		}
@@ -31,10 +31,10 @@ void affISBN(char *ISBN)
 		long4emeSeg = checkseg3N10(ISBN, p);
 		printf("-");
 		a = i;
-		for(i; i< a+long4emeSeg; i++)
+		for(; i< a+long4emeSeg; i++)
 			printf("%c", ISBN[i]);
 		printf("-");
-		for(i; i < 13; i++)
+		for(; i < 13; i++)
 		{
 			printf("%c", ISBN[i]);
 		}
@@ -44,17 +44,20 @@ void affISBN(char *ISBN)
 
 int verif_ISBN(char* ISBN) //verifie la validite de ISBN
 {
-    int valid = 0;
     int i = 0;
     if(ISBN[0] == '9' && ISBN[1] == '7')
     {
-        if(ISBN[2] == '8') 
+        if(ISBN[2] == '8')
+		{
             if(ISBN[3] != '2')
                 return(0);
-        else if(ISBN[2] == '9')
-            if(ISBN[3] != '1' || ISBN[4] != '0')
+		}
+		else if(ISBN[2] == '9')
+		{
+		    if(ISBN[3] != '1' || ISBN[4] != '0')
                 return(0);
-        else
+		}
+		else
             return(0);
     }
     else 
@@ -73,9 +76,6 @@ int verif_ISBN(char* ISBN) //verifie la validite de ISBN
 char* ISBN(char *ISBN) //Prends et affiche l'ISBN
 {
     int valide = 0;
-    int a;
-    printf("Entrez l'ISBN de l'ouvrage (13 caracteres): ");
-    scanf("%s", ISBN);
     while(valide != 1)
     {
         if(verif_ISBN(ISBN))
@@ -92,6 +92,7 @@ char* ISBN(char *ISBN) //Prends et affiche l'ISBN
             scanf("%s", ISBN);
         }
     }
+	return(ISBN);
 }
 
 
@@ -201,6 +202,7 @@ int checkseg3N2(char* ISBN, int* p) //affiche le 3eme membre et retourne
 			return(2);
 		}
 	}
+	return(0);
 }
 
 int checkseg3N10(char *ISBN, int* p)
