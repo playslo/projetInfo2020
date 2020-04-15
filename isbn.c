@@ -1,5 +1,5 @@
 //Fichier des fonctions sur l'ISBN
-
+#include "stock_livre.h"
 
 void affISBN(char *ISBN)
 {

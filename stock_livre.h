@@ -12,7 +12,7 @@ typedef struct Auteur Auteur;
 
 
 int verif_ISBN(char*);
-void ajout_livre(Livre*, int);
+int ajout_livre(Livre*, int);
 int menu_choix(void);
 int checkseg3N2(char*, int*);
 int checkseg3N10(char*, int*);
@@ -21,12 +21,15 @@ void init_livre(Livre);
 int ft_strcmp(char*, char*);
 int verif_livre(Livre*, char*, int ,int);
 void ft_strcpy(char* src, char* dest);
-void aff_livre(Livre);
+void aff_livre(Livre, int);
 void listlivres(Livre*, int, int);
 int recherchelivre(Livre*, int);
 int rechercheNom(Livre*, int);
 int ft_strcmp2(char*, char*);
-
+int suppLivre(Livre*, int, int*);
+int suppLivreCommande(Livre*, int);
+void affISBN(char*);
+int freqLivre(Livre*, int);
 
 
 #define NBRMAX 200

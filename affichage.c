@@ -1,11 +1,12 @@
 //fichier pour gerer le menu dans le Projet
 //Nathanael SIMON
 
+#include "stock_livre.h"
+
 int menu_choix(void)
 {
 	int choix;
 	int etat = 0;
-	
 	printf("==== Menu principal ====");
 	do {
 		if (etat == 1)
@@ -18,12 +19,13 @@ int menu_choix(void)
 		printf("[6] Modifier la frequence de vente d'un livre\n");
 		printf("[7] Rajouter un livre de la liste des livres a commander\n");
 		printf("[8] Supprimer un livre de la liste des livres a commander\n");
+		printf("[9] Afficher la liste des livres en commande\n");
 		printf("[0] Sortir du programme\n\n");
 		printf("Entrez votre choix : ");
 		scanf("%d", &choix);
 		etat = 1;
 	} while (choix != 0 && choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5 
-			&& choix != 6 && choix != 7 && choix != 8);
+			&& choix != 6 && choix != 7 && choix != 8 && choix != 9);
 	
 	return(choix);
 }
