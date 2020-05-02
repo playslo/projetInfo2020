@@ -22,7 +22,7 @@ int ft_strcmp(char* str1, char* str2)
     return(1);
 }
 
-void aff_livre(Livre livre, int commande)
+void aff_livre(Livre livre, int option, int commande)
 {
     int i;
     printf("TITRE :");
@@ -38,8 +38,11 @@ void aff_livre(Livre livre, int commande)
     printf("\nEDITEUR : %s\n", livre.editeur);
     printf("ISBN : ");
     affISBN(livre.ISBN);
-    printf("\nQUANTITE : %d\n", livre.exStock);
-    if (commande == 0)
+    if(commande == 0)
+        printf("\nQUANTITE : %d\n", livre.exStock);
+    else if(commande == 1)
+        printf("EXEMPLAIRES A COMMANDER : %d\n\n", livre.exCommande);
+    if (option == 0)
     {
         if(livre.freq == 1)
             printf("Livre frequement vendu (option [6] pour changer)\n\n");
@@ -51,6 +54,7 @@ void aff_livre(Livre livre, int commande)
 int verif_livre(Livre* livre, char* ISBNtemp, int nbr_livre, int statut)
 {
     int i = 0;
+    int stock;
     while(i <= nbr_livre)
     {
         if(!ft_strcmp(ISBNtemp, livre[i].ISBN))
@@ -61,8 +65,9 @@ int verif_livre(Livre* livre, char* ISBNtemp, int nbr_livre, int statut)
         {
             if(statut == 1)
                 return(1);
-            printf("Nous possedons deja cet ouvrage. Nous rajoutons 1 exemplaire a ceux que nous avons deja\n"); //demander le nombre dex voulu
-            livre[i].exStock++;
+            printf("Nous possedons deja cet ouvrage. Combien d'exemplaires voulez vous ajouter ? :\n");
+            scanf("%d", &stock);
+            livre[i].exStock += stock;
             printf("Cet exemplaire est desormais disponnible en %d exemplaires\n", livre[i].exStock);
             return(0);
         }        
@@ -80,7 +85,7 @@ void ft_strcpy(char* src, char* dest)
     }
 }
 
-int ajout_livre(Livre* livre, int nbr_livre)
+int ajout_livre(Livre* livre, int nbr_livre, int commande)
 {
     int i;
     char ISBNtmp[13];
@@ -114,11 +119,22 @@ int ajout_livre(Livre* livre, int nbr_livre)
         }
         printf("\nEntrez l'editeur du livre :");
         scanf("%s", livre[nbr_livre].editeur);
-        printf("\nCombien d'exemplaires souhaitez vous ajouter ? : ");
-        scanf("%d", &livre[nbr_livre].exStock);
+        if(commande == 0)
+        {
+            printf("\nCombien d'exemplaires souhaitez vous ajouter ? : ");
+            scanf("%d", &livre[nbr_livre].exStock);
+        }
+        else if(commande == 1)
+        {
+            printf("\nCombien d'exemplaires souhaitez vous ajouter a commander ? : ");
+            scanf("%d", &livre[nbr_livre].exCommande);
+        }
         livre[nbr_livre].freq = 0;
         printf("\n");
-        aff_livre(livre[nbr_livre], 0);
+        if(commande == 0)
+            aff_livre(livre[nbr_livre], 0, 0);
+        else
+            aff_livre(livre[nbr_livre], 1, 1);
         return(1);
     }
     return(0);
@@ -133,7 +149,7 @@ int suppLivre(Livre* livre, int nbr_livre, int* p)
     int ex;
 
     printf("\nVoici la liste des livres actuellements en stock : \n");
-    listlivres(livre, nbr_livre, 2000000);
+    listlivres(livre, nbr_livre, 2000000, 0);
     printf("Entrez l'ISBN du livre que vous voulez supprimer :");
     scanf("%s", ISBNtmp);
     while(valide != 2 && !verif_ISBN(ISBNtmp))
@@ -155,7 +171,7 @@ int suppLivre(Livre* livre, int nbr_livre, int* p)
             if(ft_strcmp(ISBNtmp, livre[i].ISBN))
             {
                 printf("Voici le livre que vous voulez supprimer :\n");
-                aff_livre(livre[i], 0);
+                aff_livre(livre[i], 0, 0);
                 printf("Etes vous sur ? 1- oui, 2- non :");
                 scanf("%d", &choix);
                     if(choix == 1)
@@ -180,7 +196,6 @@ int suppLivre(Livre* livre, int nbr_livre, int* p)
                                 if(livre[i].exStock <= 10)
                                 {
                                     *p = i;
-                                    printf("BBBBB\n");
                                     return(2);
                                 }
                             }
@@ -207,7 +222,7 @@ int suppLivreCommande(Livre* livre, int nbr_livre)
     int ex;
 
     printf("\nVoici la liste des livres actuellements en stock : \n");
-    listlivres(livre, nbr_livre, 2000000);
+    listlivres(livre, nbr_livre, 2000000, 1);
     printf("Entrez l'ISBN du livre que vous voulez supprimer :");
     scanf("%s", ISBNtmp);
     while(valide != 2 && !verif_ISBN(ISBNtmp))
@@ -228,8 +243,8 @@ int suppLivreCommande(Livre* livre, int nbr_livre)
         {
             if(ft_strcmp(ISBNtmp, livre[i].ISBN))
             {
-                printf("Voici le livre que vous voulez supprimer :\n");
-                aff_livre(livre[i], 1);
+                printf("\nVoici le livre que vous voulez supprimer :\n\n");
+                aff_livre(livre[i], 1, 1);
                 printf("Etes vous sur ? 1- oui, 2- non :");
                 scanf("%d", &choix);
                     if(choix == 1)
@@ -252,13 +267,18 @@ int suppLivreCommande(Livre* livre, int nbr_livre)
     }
 }
 
-void listlivres(Livre* livre, int nbr_livre, int stock)
+void listlivres(Livre* livre, int nbr_livre, int stock, int commande)
 {
     int i;
     for(i = 0; i< nbr_livre; i++)
     {
         if(livre[i].exStock <= stock)
-            aff_livre(livre[i], 0);
+        {
+            if(commande == 0)
+                aff_livre(livre[i], 0, 0);
+            else
+                aff_livre(livre[i], 1, 1);
+        }
     }
 }
 
@@ -309,7 +329,7 @@ int rechercheNom(Livre* livre, int nbr_livre)
         {
             trouver = 1;
             printf("=== Livre trouve ===\n");
-            aff_livre(livre[i], 0);
+            aff_livre(livre[i], 0, 0);
             i++;
         }
         else
@@ -333,7 +353,7 @@ int rechercheEditeur(Livre* livre, int nbr_livre)
         {
             trouver = 1;
             printf("=== Livre trouve ===\n");
-            aff_livre(livre[i], 0);
+            aff_livre(livre[i], 0, 0);
             i++;
         }
         else
@@ -357,7 +377,7 @@ int rechercheISBN(Livre* livre, int nbr_livre)
         {
             trouver = 1;
             printf("=== Livre trouve ===\n");
-            aff_livre(livre[i], 0);
+            aff_livre(livre[i], 0, 0);
             i++;
         }
         else
@@ -384,7 +404,7 @@ int rechercheAuteur(Livre* livre, int nbr_livre)
             {
                 trouver = 1;
                 printf("=== Livre trouve ===\n\n");
-                aff_livre(livre[i],0);
+                aff_livre(livre[i],0, 0);
                 j++;
             }
             else
@@ -434,7 +454,7 @@ int freqLivre(Livre* livre, int nbr_livre)
     int valide = 0;
     char ISBNtmp[13];
     printf("\nVoici la liste des livres actuellements en stock : \n");
-    listlivres(livre, nbr_livre, 2000000);
+    listlivres(livre, nbr_livre, 2000000, 0);
     printf("Entrez l'ISBN du livre dont vous voulez changer la frequence de vente :");
     scanf("%s", ISBNtmp);
     while(valide != 2 && !verif_ISBN(ISBNtmp))
@@ -457,7 +477,7 @@ int freqLivre(Livre* livre, int nbr_livre)
             {
                 if(livre[i].freq == 0)
                 {
-                    aff_livre(livre[i], 1);
+                    aff_livre(livre[i], 1, 0);
                     printf("Ce livre est indiquer comme peu vendu, voulez vous changer cela ? \n1- oui. 2- non : ");
                     scanf("%d", &etat);
                     if(etat == 1)
@@ -470,7 +490,7 @@ int freqLivre(Livre* livre, int nbr_livre)
                 }
                 else if(livre[i].freq == 1)
                 {
-                    aff_livre(livre[i], 1);
+                    aff_livre(livre[i], 1, 0);
                     printf("Ce livre est indiquer comme frequement vendu, voulez vous changer cela ? \n1- oui. 2- non : ");
                     scanf("%d", &etat);
                     if(etat == 1)

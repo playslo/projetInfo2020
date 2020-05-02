@@ -108,7 +108,7 @@ int checkseg3N2(char* ISBN, int* p) //affiche le 3eme membre et retourne
 	}
 	if(ISBN[4] == '3' && ISBN[5] >= '5')
 	{
-		for(i = 4; i< 10; i++)
+		for(i = 4; i< 9; i++)
 			printf("%c", ISBN[i]);
 		*p = i;
 		return(3);
@@ -141,7 +141,7 @@ int checkseg3N2(char* ISBN, int* p) //affiche le 3eme membre et retourne
 		*p = i;
 		return(5);
 	}
-	if(ISBN[4] >= '7' && (ISBN[4] <= '8' && ISBN[5] < '4'))
+	if(ISBN[4] == '7' || (ISBN[4] == '8' && ISBN[5] < '4'))
 	{
 		for(i = 4; i < 8; i++)
 			printf("%c", ISBN[i]);
@@ -229,7 +229,14 @@ int checkseg3N10(char *ISBN, int* p)
 		*p = i;
 		return(3);
 	}
-	if(ISBN[6] <= '7' && ISBN[7] <= '5')
+	if(ISBN[6] < '7')
+	{
+		for(i = 5; i < 10; i++)
+			printf("%c", ISBN[i]);
+		*p = i;
+		return(2);
+	}
+	if(ISBN[6] == '7' && ISBN[7] < '6')
 	{
 		for(i = 5; i < 10; i++)
 			printf("%c", ISBN[i]);
@@ -241,6 +248,6 @@ int checkseg3N10(char *ISBN, int* p)
 		for(i = 5; i < 11; i++)
 			printf("%c", ISBN[i]);
 		*p = i;
-		return(2);
+		return(1); 
 	}
 }
