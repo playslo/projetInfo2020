@@ -30,7 +30,14 @@ int suppLivre(Livre*, int, int*);
 int suppLivreCommande(Livre*, int);
 void affISBN(char*);
 int freqLivre(Livre*, int);
-
+void tri(Livre*, int, int);
+int selecListe(void);
+int selecTri(void);
+int triLivre(Livre*, int, Livre*, int);
+int afflivres(Livre*, int);
+int selecaff(void);
+void triA(Livre*, int, int);
+int selecRecherche(void);
 
 #define NBRMAX 200
 #define exemplaireMin 5
@@ -50,7 +57,7 @@ struct Livre
 	int nbrAuteurs;
 	Auteur auteurs[5];
 	int freq;
-	char ISBN[13];
+	char ISBN[20];
 };
 
 #endif

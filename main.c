@@ -9,7 +9,6 @@ int main(void)
 	int statut = 1;
 	int nbr_livre = 0;
 	int nbr_commande = 0;
-	int exemplaires;
 	int j;
 	int* p = &j;
 	int testsupp;
@@ -17,17 +16,21 @@ int main(void)
 
 	Livre livre[NBRMAX];
 	Livre commande[NBRMAX];
+	system("clear");
 	while (statut == 1){
 		choix = menu_choix(); 
 		switch(choix){
 			case 0: 
-				printf("=== AU REVOIR ===");
+				system("clear");
+				printf("\n\n=== AU REVOIR ===\n");
 				return (0);
 				break;
 			case 1: 
 				system("clear");
 				printf("=== AJOUT D'UN NOUVEL OUVRAGE ===\n\n");
-				if(ajout_livre(livre, nbr_livre, 0))
+				if(nbr_livre == NBRMAX -1)
+					printf("Le nombre d'ouvrage maximal a ete atteint. Veuillez supprimer un ouvrage avant d'en rajouter un autre.\n\n");
+				else if(ajout_livre(livre, nbr_livre, 0))
 					nbr_livre++;
 				break;
 			case 2:
@@ -48,24 +51,23 @@ int main(void)
 				break;
 			case 3:
 				system("clear");
-				printf("=== LISTE DE TOUS LES OUVRAGES ===\n\n");
-				if(nbr_livre != 0)
-					listlivres(livre, nbr_livre, 200000000, 0);
-				else
-					printf("Il n'y actuellement pas de livres en stock\n");
+				printf("=== LISTE DES OUVRAGES ===\n");
+				afflivres(livre, nbr_livre);
 				break;
 			case 4:
 				system("clear");
-				printf("=== LISTE ===\n");
-				printf("les ouvrages en dessous de combien d'exemplaires voulez vous lister ? : ");
-				scanf("%d", &exemplaires);
-				printf("\n");
-				listlivres(livre, nbr_livre, exemplaires, 0);
+				triLivre(livre, nbr_livre, commande, nbr_commande);
 				break;
 			case 5:
 				system("clear");
 				printf("=== RECHERCHE ===\n\n");
-				recherchelivre(livre, nbr_livre);
+				if(recherchelivre(livre, nbr_livre) == 1)
+				{
+					if(nbr_commande == NBRMAX -1)
+						printf("Le nombre maximal de livres sur la liste de commande a ete atteint. Veuillez en supprimer avant d'en rajouter");
+					else if(ajout_livre(commande, nbr_commande, 1))
+						nbr_commande++;	
+				}
 				break;
 			case 6:
 				system("clear");
@@ -75,7 +77,9 @@ int main(void)
 			case 7:
 				system("clear");
 				printf("=== Ajout d'un livre a la liste de commandes ===\n\n");
-				if(ajout_livre(commande, nbr_commande, 1))
+				if(nbr_commande == NBRMAX -1)
+					printf("Le nombre maximal de livres sur la liste de commande a ete atteint. Veuillez en supprimer avant d'en rajouter");
+				else if(ajout_livre(commande, nbr_commande, 1))
 					nbr_commande++;
 				break;
 			case 8:

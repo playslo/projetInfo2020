@@ -63,14 +63,14 @@ int verif_ISBN(char* ISBN) //verifie la validite de ISBN
     else 
         return (0);
 
-    while(i < 13)
+    while(ISBN[i] != '\0')
     {
-        if(ISBN[i] != '\0')
-            i++;
-        else
-            return(0);
+        i++;
     }
-    return(1);
+	if(i == 13)
+    	return(1);
+	else
+		return(0);
 }    
 
 char* ISBN(char *ISBN) //Prends et affiche l'ISBN
