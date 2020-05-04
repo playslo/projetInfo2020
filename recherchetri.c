@@ -117,6 +117,8 @@ int triLivre(Livre* livre, int nbr_livre, Livre* commande, int nbr_commande)
         listlivres(commande, nbr_commande, 2000000, 1);
     if(liste == 2)
         listlivres(livre, nbr_livre, 2000000, 0);
+    
+    return(0);
 }
 
 int rechercheNom(Livre* livre, int nbr_livre)

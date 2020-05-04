@@ -182,6 +182,7 @@ int afflivres(Livre* livre, int nbr_livre)
         case 3:
             break;
     }
+	return(0);
 }
 
 void clrscreen(void)

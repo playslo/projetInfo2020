@@ -63,6 +63,7 @@ int ajout_livre(Livre* livre, int nbr_livre, int commande)
     int i;
     char ISBNtmp[13];
     int valide = 0;
+    int etat = 0;
     printf("Entrez l'ISBN de l'ouvrage : ");
     scanf("%s", ISBNtmp);
     fflush(stdin);
@@ -84,7 +85,9 @@ int ajout_livre(Livre* livre, int nbr_livre, int commande)
         init_livre(livre[nbr_livre]);
         ft_strcpy(ISBNtmp, livre[nbr_livre].ISBN);
         printf("\nEntrez le titre de l'ouvrage : ");
-        scanf("%s",livre[nbr_livre].titre);
+        fflush(stdin);
+        //getchar(); //SI VOUS ETES SUR LINUX ACTIVEZ CETTE LIGNE
+        gets(livre[nbr_livre].titre);
         fflush(stdin);
         printf("\nEntrez le nombres d'auteurs :");
         scanf("%d", &livre[nbr_livre].nbrAuteurs);
@@ -103,15 +106,25 @@ int ajout_livre(Livre* livre, int nbr_livre, int commande)
         fflush(stdin);
         if(commande == 0)
         {
-            printf("\nCombien d'exemplaires souhaitez vous ajouter ? : ");
-            scanf("%d", &livre[nbr_livre].exStock);
-            fflush(stdin);
+            do{
+                if(etat == 1)
+                    printf("Nombre invalide, rententez : ");
+                printf("\nCombien d'exemplaires souhaitez vous ajouter ? : ");
+                scanf("%d", &livre[nbr_livre].exStock);
+                fflush(stdin);
+                etat = 1;
+            } while (livre[nbr_livre].exStock == 0);
         }
         else if(commande == 1)
         {
-            printf("\nCombien d'exemplaires souhaitez vous ajouter a commander ? : ");
-            scanf("%d", &livre[nbr_livre].exCommande);
-            fflush(stdin);
+            do{
+                if(etat == 1)
+                    printf("Nombre invalide, rententez : ");
+                printf("\nCombien d'exemplaires souhaitez vous ajouter a commander ? : ");
+                scanf("%d", &livre[nbr_livre].exCommande);
+                fflush(stdin);
+                etat = 1;
+            }while(livre[nbr_livre].exCommande == 0);
         }
         livre[nbr_livre].freq = 0;
         printf("\n");
@@ -200,6 +213,7 @@ int suppLivre(Livre* livre, int nbr_livre, int* p)
         printf("ISBN non trouver dans la liste. Retour au menu principal.\n");
         return(0);
     }
+    return(0);
 }
 
 int suppLivreCommande(Livre* livre, int nbr_livre)
@@ -208,7 +222,6 @@ int suppLivreCommande(Livre* livre, int nbr_livre)
     int valide = 0;
     int i;
     int choix;
-    int ex;
 
     printf("\nVoici la liste des livres actuellements en stock : \n");
     listlivres(livre, nbr_livre, 2000000, 1);
@@ -258,6 +271,7 @@ int suppLivreCommande(Livre* livre, int nbr_livre)
         printf("ISBN non trouver dans la liste. Retour au menu principal.\n");
         return(0);
     }
+    return(0);
 }
 
 int ft_strcmp2(char* str1, char* str2)
@@ -343,4 +357,5 @@ int freqLivre(Livre* livre, int nbr_livre)
     }
     if(trouver == 0)
         printf("Livre non present, retour au menu principal\n");
+    return(0);
 }

@@ -1,5 +1,6 @@
 // fichier main du projet Stock livre
 // Nathanael SIMON
+// Sous linux il faut activer la ligne 88 du fichier gestion_stock.c pour un bon fonctionnement
 
 #include "stock_livre.h"
 
