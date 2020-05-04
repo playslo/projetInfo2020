@@ -127,6 +127,7 @@ int rechercheNom(Livre* livre, int nbr_livre)
     int choix;
     printf("Quel titre voulez vous chercher ? : ");
     scanf("%s", tab);
+    fflush(stdin);
     while(i < nbr_livre)
     {
         if(!strcmp(tab, livre[i].titre))
@@ -143,6 +144,7 @@ int rechercheNom(Livre* livre, int nbr_livre)
     {
         printf("\nLe livre n'a pas ete trouve. Voulez vous le rajouter a la liste des livres a commander ? 1-oui 2-non: ");
         scanf("%d", &choix);
+        fflush(stdin);
         if(choix == 1)
             return(1);
     }
@@ -157,6 +159,7 @@ int rechercheEditeur(Livre* livre, int nbr_livre)
     int choix;
     printf("Quel editeur voulez vous chercher ? : ");
     scanf("%s", tab);
+    fflush(stdin);
     while(i < nbr_livre)
     {
         if(!strcmp(tab, livre[i].editeur))
@@ -173,6 +176,7 @@ int rechercheEditeur(Livre* livre, int nbr_livre)
     {
         printf("\nLe livre n'a pas ete trouve. Voulez vous le rajouter a la liste des livres a commander ? 1-oui 2-non: ");
         scanf("%d", &choix);
+        fflush(stdin);
         if(choix == 1)
             return(1);
     }
@@ -187,6 +191,7 @@ int rechercheISBN(Livre* livre, int nbr_livre)
     int choix;
     printf("Quel ISBN voulez vous chercher ? : ");
     scanf("%s", tab);
+    fflush(stdin);
     while(i < nbr_livre)
     {
         if(!strcmp(tab, livre[i].ISBN))
@@ -203,6 +208,7 @@ int rechercheISBN(Livre* livre, int nbr_livre)
     {
         printf("\nLe livre n'a pas ete trouve. Voulez vous le rajouter a la liste des livres a commander ? 1-oui 2-non: ");
         scanf("%d", &choix);
+        fflush(stdin);
         if(choix == 1)
             return(1);
     }
@@ -218,6 +224,7 @@ int rechercheAuteur(Livre* livre, int nbr_livre)
     int trouver = 0;
     printf("Quel est le nom de l'auteur que vous chercher ? : ");
     scanf("%s", tab);
+    fflush(stdin);
     while(i < nbr_livre)
     {
         while(j < livre[i].nbrAuteurs)
@@ -238,6 +245,7 @@ int rechercheAuteur(Livre* livre, int nbr_livre)
     {
         printf("\nLe livre n'a pas ete trouve. Voulez vous le rajouter a la liste des livres a commander ? 1-oui 2-non: ");
         scanf("%d", &choix);
+        fflush(stdin);
         if(choix == 1)
             return(1);
     }

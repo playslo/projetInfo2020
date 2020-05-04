@@ -183,3 +183,10 @@ int afflivres(Livre* livre, int nbr_livre)
             break;
     }
 }
+
+void clrscreen(void)
+{
+	int i;
+	for(i = 0; i < 50; i++)
+		printf("\n");
+}

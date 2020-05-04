@@ -90,6 +90,7 @@ char* ISBN(char *ISBN) //Prends et affiche l'ISBN
         { 
             printf("ISBN PAS VALIDE - RETENTEZ :");
             scanf("%s", ISBN);
+            fflush(stdin);
         }
     }
 	return(ISBN);

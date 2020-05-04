@@ -38,6 +38,7 @@ int afflivres(Livre*, int);
 int selecaff(void);
 void triA(Livre*, int, int);
 int selecRecherche(void);
+void clrscreen(void);
 
 #define NBRMAX 200
 #define exemplaireMin 5

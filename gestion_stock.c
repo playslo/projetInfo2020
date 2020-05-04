@@ -1,5 +1,6 @@
 //fichier de gestion des stocks
-//Nathanael SIMON
+//Nathanael SIMON & Nassim SI MOHAMMED
+
 #include "stock_livre.h"
 
 void init_livre(Livre livre)
@@ -38,6 +39,7 @@ int verif_livre(Livre* livre, char* ISBNtemp, int nbr_livre, int statut)
                 return(1);
             printf("Nous possedons deja cet ouvrage. Combien d'exemplaires voulez vous ajouter ? :\n");
             scanf("%d", &stock);
+            fflush(stdin);
             livre[i].exStock += stock;
             printf("Cet exemplaire est desormais disponnible en %d exemplaires\n", livre[i].exStock);
             return(0);
@@ -63,14 +65,18 @@ int ajout_livre(Livre* livre, int nbr_livre, int commande)
     int valide = 0;
     printf("Entrez l'ISBN de l'ouvrage : ");
     scanf("%s", ISBNtmp);
+    fflush(stdin);
+    
     while(valide != 2 && !verif_ISBN(ISBNtmp))
     {
         printf("ISBN Invalide. Reesayer ? 1-oui. 2-non :");
         scanf("%d", &valide);
+        fflush(stdin);
         if(valide == 1)
         {
             printf("Entrez l'ISBN : ");
             scanf("%s", ISBNtmp);
+            fflush(stdin);
         }
     }
     if(verif_livre(livre, ISBNtmp, nbr_livre, 0) && (valide == 1 || valide == 0))
@@ -79,26 +85,33 @@ int ajout_livre(Livre* livre, int nbr_livre, int commande)
         ft_strcpy(ISBNtmp, livre[nbr_livre].ISBN);
         printf("\nEntrez le titre de l'ouvrage : ");
         scanf("%s",livre[nbr_livre].titre);
+        fflush(stdin);
         printf("\nEntrez le nombres d'auteurs :");
         scanf("%d", &livre[nbr_livre].nbrAuteurs);
+        fflush(stdin);
         for(i = 0; i < livre[nbr_livre].nbrAuteurs; i++)
         {
             printf("\nEntrez le nom de l'auteur nO %d : ", i+1);
             scanf("%s", livre[nbr_livre].auteurs[i].nom);
+            fflush(stdin);
             printf("\nEntrez le prenom de l'auteur nO %d : ", i+1);
             scanf("%s", livre[nbr_livre].auteurs[i].prenom); 
+            fflush(stdin);
         }
         printf("\nEntrez l'editeur du livre :");
         scanf("%s", livre[nbr_livre].editeur);
+        fflush(stdin);
         if(commande == 0)
         {
             printf("\nCombien d'exemplaires souhaitez vous ajouter ? : ");
             scanf("%d", &livre[nbr_livre].exStock);
+            fflush(stdin);
         }
         else if(commande == 1)
         {
             printf("\nCombien d'exemplaires souhaitez vous ajouter a commander ? : ");
             scanf("%d", &livre[nbr_livre].exCommande);
+            fflush(stdin);
         }
         livre[nbr_livre].freq = 0;
         printf("\n");
@@ -123,14 +136,17 @@ int suppLivre(Livre* livre, int nbr_livre, int* p)
     listlivres(livre, nbr_livre, 2000000, 0);
     printf("Entrez l'ISBN du livre que vous voulez supprimer :");
     scanf("%s", ISBNtmp);
+    fflush(stdin);
     while(valide != 2 && !verif_ISBN(ISBNtmp))
     {
         printf("ISBN Invalide. Reesayer ? 1-oui. 2-non :");
         scanf("%d", &valide);
+        fflush(stdin);
         if(valide == 1)
         {
             printf("Entrez l'ISBN : ");
             scanf("%s", ISBNtmp);
+            fflush(stdin);
         }
         if(valide == 2)
             return(0);
@@ -145,10 +161,12 @@ int suppLivre(Livre* livre, int nbr_livre, int* p)
                 aff_livre(livre[i], 0, 0);
                 printf("Etes vous sur ? 1- oui, 2- non :");
                 scanf("%d", &choix);
+                fflush(stdin);
                     if(choix == 1)
                     {
                         printf("\nCombien d'exemplaires voulez vous supprimer ?");
                         scanf("%d",&ex);
+                        fflush(stdin);
                         if(ex >= livre[i].exStock)
                         {
                             while(i < nbr_livre)
@@ -196,14 +214,17 @@ int suppLivreCommande(Livre* livre, int nbr_livre)
     listlivres(livre, nbr_livre, 2000000, 1);
     printf("Entrez l'ISBN du livre que vous voulez supprimer :");
     scanf("%s", ISBNtmp);
+    fflush(stdin);
     while(valide != 2 && !verif_ISBN(ISBNtmp))
     {
         printf("ISBN Invalide. Reesayer ? 1-oui. 2-non :");
         scanf("%d", &valide);
+        fflush(stdin);
         if(valide == 1)
         {
             printf("Entrez l'ISBN : ");
             scanf("%s", ISBNtmp);
+            fflush(stdin);
         }
         if(valide == 2)
             return(0);
@@ -218,6 +239,7 @@ int suppLivreCommande(Livre* livre, int nbr_livre)
                 aff_livre(livre[i], 1, 1);
                 printf("Etes vous sur ? 1- oui, 2- non :");
                 scanf("%d", &choix);
+                fflush(stdin);
                     if(choix == 1)
                     {
                         while(i < nbr_livre)
@@ -262,14 +284,17 @@ int freqLivre(Livre* livre, int nbr_livre)
     listlivres(livre, nbr_livre, 2000000, 0);
     printf("Entrez l'ISBN du livre dont vous voulez changer la frequence de vente :");
     scanf("%s", ISBNtmp);
+    fflush(stdin);
     while(valide != 2 && !verif_ISBN(ISBNtmp))
     {
         printf("ISBN Invalide. Reesayer ? 1-oui. 2-non :");
         scanf("%d", &valide);
+        fflush(stdin);
         if(valide == 1)
         {
             printf("Entrez l'ISBN : ");
             scanf("%s", ISBNtmp);
+            fflush(stdin);
         }
         if(valide == 2)
             return(0);
@@ -285,6 +310,7 @@ int freqLivre(Livre* livre, int nbr_livre)
                     aff_livre(livre[i], 1, 0);
                     printf("\nCe livre est indiquer comme peu vendu, voulez vous changer cela ? \n1- oui. 2- non : ");
                     scanf("%d", &etat);
+                    fflush(stdin);
                     if(etat == 1)
                     {
                         livre[i].freq = 1;
@@ -298,6 +324,7 @@ int freqLivre(Livre* livre, int nbr_livre)
                     aff_livre(livre[i], 1, 0);
                     printf("\nCe livre est indiquer comme frequement vendu, voulez vous changer cela ? \n1- oui. 2- non : ");
                     scanf("%d", &etat);
+                    fflush(stdin);
                     if(etat == 1)
                     {
                         livre[i].freq = 0;
